@@ -1,0 +1,27 @@
+{
+  "name": "minidux",
+  "version": "1.0.0",
+  "description": "just like redux but tiny",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeman-lab/minidux.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freeman-lab/minidux/issues"
+  },
+  "homepage": "https://github.com/freeman-lab/minidux#readme",
+  "devDependencies": {
+    "standard": "^6.0.7",
+    "tap-spec": "^4.1.1",
+    "tape": "^4.5.0"
+  },
+  "dependencies": {
+    "is-plain-object": "^2.0.1"
+  }
+}
