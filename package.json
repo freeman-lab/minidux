@@ -4,7 +4,7 @@
   "description": "just like redux but tiny",
   "main": "index.js",
   "scripts": {
-    "test": "tape test.js | tap-spec"
+    "test": "standard && tape test.js | tap-spec"
   },
   "repository": {
     "type": "git",
