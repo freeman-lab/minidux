@@ -24,6 +24,12 @@ module.exports = function createStore (reducer, initialState) {
     listener = cb
   }
 
+  function replaceReducer (next) {
+    if (typeof next !== 'function') throw new Error('new reducer must be a function')
+
+    reducer = next
+  }
+
   function getState () {
     return state
   }
@@ -31,6 +37,7 @@ module.exports = function createStore (reducer, initialState) {
   return {
     dispatch: dispatch,
     subscribe: subscribe,
-    getState: getState
+    getState: getState,
+    replaceReducer: replaceReducer
   }
 }
