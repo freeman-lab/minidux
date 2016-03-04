@@ -1,2 +1,2 @@
 # minidux
-just like redux but tiny
+just like `redux` but tiny.
