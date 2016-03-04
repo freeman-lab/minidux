@@ -104,3 +104,17 @@ test('missing type fails', function (t) {
 
   t.end()
 })
+
+test('replace a reducer', function (t) {
+  var store = createStore(function () {})
+  store.replaceReducer(function reducer (state, action) {
+    if (action.type === 'example') {
+      return { example: action.example }
+    }
+  })
+  store.dispatch({ type: 'example', example: false })
+  var state = store.getState()
+  t.ok(state)
+  t.equal(state.example, false)
+  t.end()
+})
