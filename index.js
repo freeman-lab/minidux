@@ -28,6 +28,8 @@ module.exports = function createStore (reducer, initialState) {
     return state
   }
 
+  dispatch({ type: '@@minidux/INIT' })
+
   return {
     dispatch: dispatch,
     subscribe: subscribe,

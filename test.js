@@ -31,8 +31,18 @@ test('missing reducer function fails', function (t) {
   t.end()
 })
 
+test('initial action', function (t) {
+  function reducer (state, action) {
+    t.ok(action.type.indexOf('INIT') > -1)
+    return { example: true }
+  }
+
+  createStore(reducer, {})
+  t.end()
+})
+
 test('initial state', function (t) {
-  var store = createStore(function () {}, { example: true })
+  var store = createStore(function (state, action) { return state }, { example: true })
   var state = store.getState()
   t.ok(state)
   t.ok(state.example)
@@ -57,7 +67,7 @@ test('get state', function (t) {
 test('action has a type', function (t) {
   function reducer (state, action) {
     t.ok(action.type)
-    t.equal(action.type, 'example')
+    t.ok(action.type.indexOf('INIT') > -1 || action.type.indexOf('example') > -1)
     return { example: true }
   }
 
