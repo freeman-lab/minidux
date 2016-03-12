@@ -25,14 +25,23 @@ module.exports = function createStore (reducer, initialState) {
     listener = cb
   }
 
+  function replaceReducer (next) {
+    if (typeof next !== 'function') throw new Error('new reducer must be a function')
+
+    reducer = next
+  }
+
   function getState () {
     return state
   }
+
+  dispatch({ type: '@@minidux/INIT' })
 
   return {
     dispatch: dispatch,
     subscribe: subscribe,
     getState: getState,
+    replaceReducer: replaceReducer,
     combineReducers: combineReducers
   }
 }

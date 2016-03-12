@@ -32,8 +32,18 @@ test('missing reducer function fails', function (t) {
   t.end()
 })
 
+test('initial action', function (t) {
+  function reducer (state, action) {
+    t.ok(action.type.indexOf('INIT') > -1)
+    return { example: true }
+  }
+
+  createStore(reducer, {})
+  t.end()
+})
+
 test('initial state', function (t) {
-  var store = createStore(function () {}, { example: true })
+  var store = createStore(function (state, action) { return state }, { example: true })
   var state = store.getState()
   t.ok(state)
   t.ok(state.example)
@@ -58,7 +68,7 @@ test('get state', function (t) {
 test('action has a type', function (t) {
   function reducer (state, action) {
     t.ok(action.type)
-    t.equal(action.type, 'example')
+    t.ok(action.type.indexOf('INIT') > -1 || action.type.indexOf('example') > -1)
     return { example: true }
   }
 
@@ -96,6 +106,20 @@ test('missing type fails', function (t) {
   t.end()
 })
 
+test('replace a reducer', function (t) {
+  var store = createStore(function () {})
+  store.replaceReducer(function reducer (state, action) {
+    if (action.type === 'example') {
+      return { example: action.example }
+    }
+  })
+  store.dispatch({ type: 'example', example: false })
+  var state = store.getState()
+  t.ok(state)
+  t.equal(state.example, false)
+  t.end()
+})
+
 test('combine reducers', function (t) {
   var reducer = combineReducers({
     add: function (state, action) {
@@ -119,6 +143,5 @@ test('combine reducers', function (t) {
 
   store.dispatch({ type: 'multiply', x: 3, y: 3 })
   t.equal(store.getState().multiply, 9)
-
   t.end()
 })
