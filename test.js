@@ -1,5 +1,6 @@
 var test = require('tape')
 var createStore = require('./index')
+var combineReducers = require('./combineReducers')
 
 test('create a store', function (t) {
   function reducer (state, action) {
@@ -91,6 +92,33 @@ test('missing type fails', function (t) {
     t.ok(err)
     t.equal(err.message, 'type property of action is required and must be a string')
   }
+
+  t.end()
+})
+
+test('combine reducers', function (t) {
+  var reducer = combineReducers({
+    add: function (state, action) {
+      if (action.type === 'add') {
+        return action.x + action.y
+      }
+      return state
+    },
+    multiply: function (state, action) {
+      if (action.type === 'multiply') {
+        return action.x * action.y
+      }
+      return state
+    }
+  })
+
+  var store = createStore(reducer, { add: 0, multiply: 0 })
+
+  store.dispatch({ type: 'add', x: 2, y: 2 })
+  t.equal(store.getState().add, 4)
+
+  store.dispatch({ type: 'multiply', x: 3, y: 3 })
+  t.equal(store.getState().multiply, 9)
 
   t.end()
 })

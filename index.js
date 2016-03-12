@@ -1,4 +1,5 @@
 var isPlainObject = require('is-plain-object')
+var combineReducers = require('./combineReducers')
 
 module.exports = function createStore (reducer, initialState) {
   if (!reducer || typeof reducer !== 'function') throw new Error('reducer must be a function')
@@ -31,6 +32,7 @@ module.exports = function createStore (reducer, initialState) {
   return {
     dispatch: dispatch,
     subscribe: subscribe,
-    getState: getState
+    getState: getState,
+    combineReducers: combineReducers
   }
 }
