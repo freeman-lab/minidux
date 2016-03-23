@@ -1,5 +1,6 @@
 var test = require('tape')
 var createStore = require('./index')
+var combineReducers = require('./combineReducers')
 
 test('create a store', function (t) {
   function reducer (state, action) {
@@ -116,5 +117,31 @@ test('replace a reducer', function (t) {
   var state = store.getState()
   t.ok(state)
   t.equal(state.example, false)
+  t.end()
+})
+
+test('combine reducers', function (t) {
+  var reducer = combineReducers({
+    add: function (state, action) {
+      if (action.type === 'add') {
+        return action.x + action.y
+      }
+      return state
+    },
+    multiply: function (state, action) {
+      if (action.type === 'multiply') {
+        return action.x * action.y
+      }
+      return state
+    }
+  })
+
+  var store = createStore(reducer, { add: 0, multiply: 0 })
+
+  store.dispatch({ type: 'add', x: 2, y: 2 })
+  t.equal(store.getState().add, 4)
+
+  store.dispatch({ type: 'multiply', x: 3, y: 3 })
+  t.equal(store.getState().multiply, 9)
   t.end()
 })
