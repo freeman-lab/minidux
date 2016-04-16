@@ -4,7 +4,7 @@
   "description": "just like redux but tiny",
   "main": "index.js",
   "scripts": {
-    "test": "standard && tape test.js | tap-spec"
+    "test": "standard && tape test.js | tap-spec && browserify test.js | testron | tap-spec"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,12 @@
   "devDependencies": {
     "standard": "^6.0.7",
     "tap-spec": "^4.1.1",
-    "tape": "^4.5.0"
+    "tape": "^4.5.0",
+    "testron": "^1.2.0"
   },
   "dependencies": {
-    "is-plain-object": "^2.0.1"
+    "composite": "^0.2.3",
+    "is-plain-object": "^2.0.1",
+    "xtend": "^4.0.1"
   }
 }
