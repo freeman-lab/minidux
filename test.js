@@ -1,6 +1,8 @@
 var test = require('tape')
-var createStore = require('./index')
+var createStore = require('./index').createStore
 var combineReducers = require('./combineReducers')
+var applyMiddleware = require('./applyMiddleware')
+var bindActionCreators = require('./bindActionCreators')
 
 test('create a store', function (t) {
   function reducer (state, action) {
@@ -143,5 +145,61 @@ test('combine reducers', function (t) {
 
   store.dispatch({ type: 'multiply', x: 3, y: 3 })
   t.equal(store.getState().multiply, 9)
+  t.end()
+})
+
+test('apply middleware', function (t) {
+  t.plan(3)
+
+  function reducer (state, action) {
+    if (action.type === 'item') {
+      state.item = action.item
+      return state
+    } else {
+      return state
+    }
+  }
+
+  function decorate (store) {
+    return function (next) {
+      return function (action) {
+        t.ok(action)
+        action.item = 'this is the item'
+        return next(action)
+      }
+    }
+  }
+
+  function log (store) {
+    return function (next) {
+      return function (action) {
+        t.ok(action)
+        return next(action)
+      }
+    }
+  }
+
+  var store = createStore(reducer, { item: null }, applyMiddleware(decorate, log))
+  store.dispatch({ type: 'item' })
+  t.equal(store.getState().item, 'this is the item')
+  t.end()
+})
+
+test('bind action creators', function (t) {
+  var actionCreators = {
+    item: function item (text) {
+      return { type: 'item', item: text }
+    }
+  }
+
+  var store = createStore(function (state, action) {
+    if (action.type === 'item') {
+      return { item: action.item }
+    }
+  }, { item: null })
+
+  var bound = bindActionCreators(actionCreators, store.dispatch)
+  bound.item('hello')
+  t.equal(store.getState().item, 'hello')
   t.end()
 })
