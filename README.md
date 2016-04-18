@@ -2,7 +2,7 @@
 
 > just like [`redux`](https://github.com/reactjs/redux) but tiny
 
-This little module mimics the `redux` API but written in vanilla JS and with minimal dependencies and dev dependencies.
+This little module mimics the `redux` API, is written in vanilla JS, and has minimal dependencies and dev dependencies.
 
 ## Redux docs
 
