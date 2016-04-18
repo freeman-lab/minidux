@@ -46,7 +46,7 @@ var compose = require('minidux/compose')
 
 ## API
 
-### `var store = createStore(reducer, [initialState], [enhancer])`
+#### `var store = createStore(reducer, [initialState], [enhancer])`
 [Full redux docs for `createStore`](http://redux.js.org/docs/api/createStore.html)
 
 #### `store.getState()`
