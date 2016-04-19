@@ -1,5 +1,5 @@
 var compose = require('./compose')
-var extend = require('extend')
+var extend = require('xtend')
 
 module.exports = function applyMiddleware () {
   var middlewares = [].slice.call(arguments)
