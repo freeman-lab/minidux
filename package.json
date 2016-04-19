@@ -1,6 +1,6 @@
 {
   "name": "minidux",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "just like redux but tiny",
   "main": "index.js",
   "scripts": {
